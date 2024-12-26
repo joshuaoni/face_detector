@@ -126,7 +126,7 @@ const VideoRecorder: React.FC = () => {
       {videoUrl && (
         <div className="mt-6 w-full">
           <h3 className="text-lg font-medium mb-2">Recorded Video:</h3>
-          <video src={videoUrl} controls className="w-full rounded-lg shadow" autoPlay muted loop playsInline/>
+          <video src={videoUrl} controls preload="auto" playsInline className="w-full rounded-lg shadow" />
         </div>
       )}
       {videoUrl && (
