@@ -9,17 +9,21 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.0",
+    "face-api.js": "^0.22.2",
+    "next": "13.5.8",
+    "node-libs-browser": "^2.2.1",
+    "node-polyfill-webpack-plugin": "^4.1.0",
     "react": "^18",
-    "react-dom": "^18",
-    "next": "13.5.8"
+    "react-dom": "^18"
   },
   "devDependencies": {
-    "typescript": "^5",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "autoprefixer": "^10",
     "postcss": "^8",
-    "tailwindcss": "^3"
+    "tailwindcss": "^3",
+    "typescript": "^5"
   }
 }
