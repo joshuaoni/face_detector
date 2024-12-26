@@ -74,7 +74,7 @@ const VideoRecorder: React.FC = () => {
     };
   
     mediaRecorder.onstop = () => {
-      const blob = new Blob(chunks.current, { type: 'video/webm' });
+      const blob = new Blob(chunks.current, { type: 'video/mp4' });
       const url = URL.createObjectURL(blob);
       setVideoUrl(url);
       chunks.current = [];
