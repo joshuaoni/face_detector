@@ -119,7 +119,7 @@ const VideoRecorder: React.FC = () => {
         ) : (
           <button
             onClick={startRecording}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
+            className="bg-yellow-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
           >
             Start Recording
           </button>
