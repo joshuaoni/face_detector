@@ -100,9 +100,8 @@ const VideoRecorder: React.FC = () => {
   return (
     <div className="px-4 flex flex-col items-center font-sans">
       <div className="relative">
-        <video ref={videoRef} className="w-full rounded-lg shadow-md" autoPlay muted loop>
+        <video ref={videoRef} className="w-full rounded-lg shadow-md" autoPlay muted loop playsInline>
         <source src="video.mp4" type="video/mp4"/>
-        <source src="your-video.webm" type="video/webm"/>
         </video>
         <canvas
           ref={canvasRef}
