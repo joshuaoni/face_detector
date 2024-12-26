@@ -13,72 +13,46 @@ const VideoRecorder: React.FC = () => {
 
 
   useEffect(() => {
-    // Function to initialize the video and face-api models
-    const init = async () => {
-      await loadFaceApiModels(); // Load the face-api models
-  
-      const stream = await navigator.mediaDevices.getUserMedia({ video: true }); // Request the camera stream
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-  
-        // Wait for video metadata to load, then start video and initiate face tracking
-        videoRef.current.onloadedmetadata = () => {
-          videoRef.current?.play().catch((err) => {
-            console.error("Error playing video: ", err);
-          });
-  
-          // Set the canvas size based on video dimensions
-          const video = videoRef.current!;
-          const canvas = canvasRef.current!;
-          canvas.width = video.videoWidth;
-          canvas.height = video.videoHeight;
-  
-          // Start tracking faces after the video is loaded and playing
-          requestAnimationFrame(trackFace);
-        };
+    async function init() {
+        await loadFaceApiModels();
+    
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        if (videoRef.current) {
+          videoRef.current.srcObject = stream;
+    
+          videoRef.current.onloadedmetadata = () => {
+            videoRef.current?.play();
+            const video = videoRef.current!;
+            const canvas = canvasRef.current!;
+
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
+    
+            requestAnimationFrame(trackFace);
+          };
+        }
       }
-    };
-  
-    // Function to track faces and draw bounding boxes
+
     const trackFace = async () => {
       if (videoRef.current && canvasRef.current) {
-        const detections = await detectFace(videoRef.current); // Detect faces
-  
+        const detections = await detectFace(videoRef.current);
         const ctx = canvasRef.current.getContext('2d');
         if (ctx) {
-          // Clear the previous frame from the canvas
           ctx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-  
-          // Draw the current video frame on the canvas
-          ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height);
-  
-          // Draw bounding boxes around detected faces
+          ctx.drawImage(videoRef.current, 0, 0, canvasRef.current.width, canvasRef.current.height); 
           detections.forEach((detection) => {
             const { x, y, width, height } = detection.box;
             ctx.strokeStyle = 'lime';
             ctx.lineWidth = 2;
-            ctx.strokeRect(x, y, width, height); // Draw the bounding box
+            ctx.strokeRect(x, y, width, height);
           });
         }
       }
-  
-      // Continuously call trackFace to keep detecting faces and updating the canvas
-      requestAnimationFrame(trackFace);
+      requestAnimationFrame(trackFace);  
     };
-  
-    // Call the init function when the component is mounted
+
     init();
-  
-    // Cleanup function to stop the video stream when the component is unmounted
-    return () => {
-      if (videoRef.current) {
-        const stream = videoRef.current.srcObject as MediaStream;
-        const tracks = stream?.getTracks();
-        tracks?.forEach(track => track.stop()); // Stop all tracks when the component is unmounted
-      }
-    };
   }, []);
-  
 
   const startRecording = () => {
     if (!canvasRef.current) {
