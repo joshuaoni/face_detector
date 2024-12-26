@@ -102,6 +102,7 @@ const VideoRecorder: React.FC = () => {
       <div className="relative">
         <video ref={videoRef} className="w-full rounded-lg shadow-md" autoPlay muted loop>
         <source src="video.mp4" type="video/mp4"/>
+        <source src="your-video.webm" type="video/webm"/>
         </video>
         <canvas
           ref={canvasRef}
@@ -119,7 +120,7 @@ const VideoRecorder: React.FC = () => {
         ) : (
           <button
             onClick={startRecording}
-            className="bg-yellow-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
+            className="bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
           >
             Start Recording
           </button>
