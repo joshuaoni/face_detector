@@ -10,6 +10,7 @@ const VideoRecorder: React.FC = () => {
   const chunks = useRef<Blob[]>([]);
   const [isRecording, setIsRecording] = useState(false);
   const [videoUrl, setVideoUrl] = useState<string | null>(null);
+  const [downloaded, setDownloaded]=useState<boolean>(false);
 
 
   useEffect(() => {
@@ -90,10 +91,15 @@ const VideoRecorder: React.FC = () => {
 
   const downloadVideo = () => {
     if (videoUrl) {
-      const a = document.createElement('a');
-      a.href = videoUrl;
-      a.download = 'recorded_video.mp4';
-      a.click();
+        const a = document.createElement('a');
+        a.href = videoUrl;
+        a.download = 'recorded_video.mp4';
+        a.click();
+        setDownloaded(true);
+
+        setTimeout(() => {
+        setDownloaded(false);
+        }, 2000);
     }
   };
 
@@ -130,13 +136,19 @@ const VideoRecorder: React.FC = () => {
         </div>
       )}
       {videoUrl && (
-        <button
-          onClick={downloadVideo}
-          className="my-4 bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
-        >
-          Download Video
-        </button>
-      )}
+  <>
+    {downloaded ? (
+      <div className='text-xl font-medium my-4'>Downloaded!</div>
+    ) : (
+      <button
+        onClick={downloadVideo}
+        className="my-4 bg-blue-600 text-white px-6 py-2 rounded-lg shadow hover:bg-blue-700 focus:outline-none transition-all"
+      >
+        Download Video
+      </button>
+    )}
+  </>
+)}
     </div>
   );
 };
